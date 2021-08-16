@@ -1,0 +1,30 @@
+.chat__input {
+  resize: none;
+  margin-top: 1rem;
+}
+
+.chat__icon__menu {
+  position: relative;
+  margin-left: 2rem;
+}
+
+.emoji-picker-react {
+  position: absolute;
+  top: -310px;
+}
+
+.google__btn > div {
+  margin: 0 !important;
+  border: none !important;
+  height: 38px !important;
+}
+
+.google__btn {
+  height: 40px;
+  border: 1px dotted green !important;
+  box-shadow: none !important;
+}
+
+.google__btn > div > svg {
+  font-size: 20px;
+}
