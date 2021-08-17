@@ -62,6 +62,11 @@ class UserApi {
 
     return result['data']['profile']
   }
+
+  LocalSignIn = async (email, password) => {
+    const result = await axiosInstance.post('/auth/signin', { email, password })
+    return result
+  }
 }
 
 const userApi = new UserApi()

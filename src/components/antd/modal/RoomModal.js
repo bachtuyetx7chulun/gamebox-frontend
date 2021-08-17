@@ -9,7 +9,7 @@ const { Option } = Select
 const CButton = styled(Button)`
   color: green;
   border: 1px dashed green;
-  margin-left: 1rem;
+  margin-left: 0.5rem;
 `
 
 function RoomModal({ title, createRoom }) {
