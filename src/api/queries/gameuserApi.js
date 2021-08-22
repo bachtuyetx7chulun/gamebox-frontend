@@ -1,6 +1,6 @@
 import { axiosInstance } from '../axios'
 
-class RoomApi {
+class GameUserApi {
   GetAll = async () => {
     const result = await axiosInstance.post('/graphql', {
       query: `query getGamesRooms {
@@ -45,29 +45,37 @@ class RoomApi {
     }
   }
 
-  CreateRoom = async (payload) => {
+  CreateGameUser = async (payload) => {
+    const { userId } = payload
     const result = await axiosInstance.post('/graphql', {
-      query: `mutation createGameRoom {
-        createGameroom(
-          createGameRoomInput: { name: "${payload.name}", gameId: ${payload.gameId}, playerCount: 1 }
+      query: `mutation createGameUser {
+        createGameuser(
+          createGameuserInput: { name: "${payload.name}", gameId: ${payload.gameId}, gameRoomId: ${payload.roomId}, ${userId} }
         ) {
           id
           name
-          playerCount
+          gameRoom {
+            id
+            name
+            playerCount
+          }
           game {
             id
             name
             description
-            picture
+          }
+          user {
+            name
           }
         }
       }
+      
       `,
     })
 
-    return result['data']['createGameroom']
+    return result['data']['createGameUser']
   }
 }
 
-const roomApi = new RoomApi()
-export default roomApi
+const gameUserApi = new GameUserApi()
+export default gameUserApi

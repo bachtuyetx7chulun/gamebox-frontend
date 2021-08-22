@@ -16,7 +16,7 @@ function RouterComponent() {
       <Route path='/' exact>
         <MainPage />
       </Route>
-      <Route path='/room'>
+      <Route path='/rooms'>
         <RoomRouter />
       </Route>
       <PrivateRoute path='/admin'>

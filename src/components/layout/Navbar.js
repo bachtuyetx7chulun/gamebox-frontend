@@ -10,9 +10,9 @@ import styled from 'styled-components'
 
 const URow = styled(Row)`
   position: fixed;
+  z-index: 1;
   width: 100vw;
   bottom: 0;
-
   color: white;
   font-weight: 500;
   padding-bottom: 1rem;
@@ -48,7 +48,7 @@ function Navbar() {
     <URow>
       <UCol span={22} offset={1} className='chat__user'>
         <Space>
-          <Avatar hidden={!user.login} shape='square' size='large' icon={<UserOutlined />} />
+          <Avatar src={user['profile']['picture']} shape='square' size='large' icon={<UserOutlined />} />
           <div className='chat__user__name'>{user && user['profile']['name']}</div>
         </Space>
         <Space>
@@ -91,6 +91,15 @@ function Navbar() {
           danger
         >
           Signout
+        </Button>
+        <Button
+          hidden={user.login}
+          onClick={() => {
+            history.push('/signin')
+          }}
+          type='dashed'
+        >
+          Signin
         </Button>
       </Drawer>
     </URow>

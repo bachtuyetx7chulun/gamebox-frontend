@@ -1,8 +1,9 @@
 import { Button, Form, Input, Modal, Select } from 'antd'
+import delay from 'delay'
 import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import gameApi from '../../../api/queries/gameApi'
-import { errorModal, successModal } from './ExtendModal'
+import { errorModal } from './ExtendModal'
 
 const { Option } = Select
 
@@ -19,19 +20,20 @@ function RoomModal({ title, createRoom }) {
   const [games, setGames] = useState([])
   const [isCreate, setIsCreate] = useState(false)
   const [roomName, setRoomName] = useState('')
-  const [gameId, setGameId] = useState()
+  const [gameId, setGameId] = useState(0)
   const [disableCreate, setDisableCreate] = useState(true)
 
   const handleChange = (type, value) => {
     roomName.length > 0 && gameId > 0 ? setDisableCreate(false) : setDisableCreate(true)
     if (type === 'room') {
-      value > 0 ? setDisableCreate(false) : setDisableCreate(true)
+      value.length > 0 && gameId > 0 ? setDisableCreate(false) : setDisableCreate(true)
       setRoomName(value)
     }
 
     if (type === 'game') {
-      roomName.length > 0 && typeof value === 'number' ? setDisableCreate(false) : setDisableCreate(true)
-      setGameId(value)
+      const gameId = parseInt(value)
+      roomName.length > 0 && gameId > 0 ? setDisableCreate(false) : setDisableCreate(true)
+      setGameId(gameId)
     }
   }
 
@@ -41,16 +43,14 @@ function RoomModal({ title, createRoom }) {
 
   const handleOk = async () => {
     try {
-      if (gameId === '') {
-        console.log(gameId)
-        return
-      }
       setIsCreate(true)
+      if (gameId === '') return
+      await delay(2000)
+
       await createRoom({
         name: roomName,
         gameId,
       })
-      successModal('The room is created')
     } catch (error) {
       errorModal('Error', 'The room can not create, please check it later')
     } finally {
@@ -66,7 +66,7 @@ function RoomModal({ title, createRoom }) {
     })
     formRef.current.resetFields()
     setRoomName('')
-    setGameId()
+    setGameId(0)
     setDisableCreate(true)
   }
 
@@ -89,7 +89,7 @@ function RoomModal({ title, createRoom }) {
         onOk={handleOk}
         onCancel={handleCancel}
         confirmLoading={isCreate}
-        okButtonProps={{ disabled: disableCreate, htmlType: 'submit' }}
+        okButtonProps={{ disabled: disableCreate, htmlType: 'submit', loading: isCreate }}
       >
         <Form layout='vertical' ref={formRef} form={form} autoComplete='false'>
           <Form.Item

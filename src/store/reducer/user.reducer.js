@@ -3,6 +3,7 @@ import { USER_ACTIONS } from 'store/action/index'
 const initialState = {
   login: false,
   profile: {
+    id: '',
     name: '',
     picture: '',
     type: '',
@@ -11,6 +12,7 @@ const initialState = {
     facebook: '',
     role: '',
   },
+  socket: null,
 }
 
 const userReducer = (state = initialState, action) => {
@@ -23,6 +25,7 @@ const userReducer = (state = initialState, action) => {
       const resetPayload = {
         login: false,
         profile: {
+          id: '',
           name: '',
           picture: '',
           type: '',

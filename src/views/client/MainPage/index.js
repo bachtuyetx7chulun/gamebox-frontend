@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 function MainPage() {
   return (
     <div>
-      <Link to='/room'>RoomPage</Link>
+      <Link to='/rooms'>RoomPage</Link>
     </div>
   )
 }
